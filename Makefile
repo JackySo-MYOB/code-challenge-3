@@ -28,7 +28,7 @@ install-dep: ## Intall nodejs dependencies in package.json
 
 update-version: ## Update node pakage.json version in package.json and tag version in yaml file
 	@npm version $(TYPE) || true
-	@make update-tag
+	@make -s update-tag
 
 update-tag: ## Update tag version in yaml file
 	@cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(TAG)/g' yaml/node-web.yaml

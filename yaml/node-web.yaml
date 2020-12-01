@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: webapp1
-        image: docker.io/jackyso/node-web:1.0.8
+        image: docker.io/jackyso/node-web:1.0.9
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
