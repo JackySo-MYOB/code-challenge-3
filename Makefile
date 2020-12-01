@@ -11,6 +11,8 @@ TAG := latest
 IMAGE := node-web
 TAG := $(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", ]//g')
 CONTAINER := node-web
+FLUX := https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deploy-helm/flux-helm-release-crd.yaml
+GIT := github.com:JackySo-MYOB/code-challenge-3.git
 
 ## help: This help
 help: Makefile
@@ -134,13 +136,26 @@ get-pods: ## Get pods in default namespace
 	@echo "--- kubectl get pods -o wide"
 	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get pods -o wide
 
-run-web-pod: ## Run web pod in cluster default namespace and expose por 80 for testing target
-	@echo "--- kubectl run web --image=nginx --labels app=web --expose --port 80"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) "kubectl run web --image=nginx --labels app=web --expose --port 80"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) "kubectl get all -o wide"
+kubectl-sa-tiller: ## SSH into Kubernetes master node and create service account tiller and rolebinding 
+	@echo "--- SSH into master node and create service account and rolebinding"
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl create sa tiller -n kube-system
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 
-delete-web-pod: ## Delete web service and pod from cluster default namespace
-	@echo "--- kubectl delete pod/web; kubectl delete service/web"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) "kubectl delete service web; kubectl delete pod web"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) "kubectl get all -o wide"
+helm-init: ## SSH into Kubernetes master node and run helm init
+	@echo "--- SSH into master node and run helm init --service-account tiller --history-max 200"
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) helm init --service-account tiller --history-max 200
+
+kubectl-install-flux-crd: ## SSH into Kubernetes master node and install flux CRD
+	@echo "--- SSH into master node and create service account and rolebinding"
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl apply -f $(FLUX) || true
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get crds | grep -i flux || true
+
+helm-install-flux: ## SSH into Kubernetes master node and helm add repo plus install flux and kubectl get resources in namespace flux
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) helm repo add fluxcd https://charts.fluxcd.io
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) helm upgrade -i flux --set helmOperator.create=true --set helmOperator.createCRD=false --set git.url=$(GIT) --namespace flux fluxcd/flux
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get all -n flux
+
+kubectl-get-pod-flux: ## SSH into Kubernetes master node and get pod name in flux namespace
+	@echo "--- SSH into master node and get pod name"
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get pods -n flux | grep -v memcached
 

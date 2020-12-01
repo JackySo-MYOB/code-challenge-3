@@ -1168,4 +1168,88 @@ f04853d2d299: Layer already exists
 1.0.5: digest: sha256:78f51c6502736d75b1f826dfbe42f20fab3166ea5f5391828d7cdc6acc8f1ce2 size: 3056
 
 
+$ make update-version
+v1.0.10
+jso@ubunu2004:~/myob-work/work/aws-cf/git-repo/code-challenge-3$ make docker-build
+Sending build context to Docker daemon  181.6MB
+Step 1/9 : FROM node:10
+ ---> 2db91b8e7c1b
+Step 2/9 : WORKDIR /usr/src
+ ---> Using cache
+ ---> 6b8fa6007f01
+Step 3/9 : RUN git clone https://github.com/JackySo-MYOB/code-challenge-3.git app
+ ---> Using cache
+ ---> acc1f115e9b8
+Step 4/9 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> e984a66f4d18
+Step 5/9 : COPY package*.json ./
+ ---> 53b7719c1225
+Step 6/9 : RUN npm install
+ ---> Running in acae90379279
+npm WARN code_challenge_node_app@1.0.10 No repository field.
+npm WARN code_challenge_node_app@1.0.10 No license field.
+
+added 50 packages from 37 contributors and audited 50 packages in 2.286s
+found 0 vulnerabilities
+
+Removing intermediate container acae90379279
+ ---> e3875b9ff3d2
+Step 7/9 : COPY . .
+ ---> ee8b9a7796f3
+Step 8/9 : EXPOSE 8080
+ ---> Running in 167e248f68b7
+Removing intermediate container 167e248f68b7
+ ---> fbc3252bc337
+Step 9/9 : CMD [ "node", "server.js" ]
+ ---> Running in 8a4ad287bfd3
+Removing intermediate container 8a4ad287bfd3
+ ---> 9306ba60716d
+Successfully built 9306ba60716d
+Successfully tagged jackyso/node-web:1.0.10
+
+$ make docker-push
+Password: 
+WARNING! Your password will be stored unencrypted in /home1/jso/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+The push refers to repository [docker.io/jackyso/node-web]
+20b6fe8baf63: Pushed 
+c8965b543012: Pushed 
+1c58a636482b: Pushed 
+92d79814b0dd: Layer already exists 
+982ea30af730: Layer already exists 
+a047f6fe27f5: Layer already exists 
+f5211c608ae5: Layer already exists 
+0c6d2a8d3a7e: Layer already exists 
+6ad22fbe53ce: Layer already exists 
+f04853d2d299: Layer already exists 
+9f07fffa6fe1: Layer already exists 
+6c5a5125b341: Layer already exists 
+26711ab4f3b6: Layer already exists 
+1.0.10: digest: sha256:fd2d1a559a159f705bf217594e42beebdc62662861a1a7c61ad73e9dcfd98e84 size: 3056
+
+$ make apply-node-web
+--- SCP file into master node and kubectl apply
+node-web.yaml                                                                                                                       100%  614    22.9KB/s   00:00    
+deployment.apps/webapp1 created
+
+$ make kubectl-command COMMAND="get pods -n default"
+--- SSH into master node and kubectl get pods -n default
+NAME                       READY   STATUS    RESTARTS   AGE
+webapp1-7f8d89bcd6-pvnws   1/1     Running   0          7s
+
+$ make validate-k8s-app 
+{
+  "myapplication": [
+    {
+      "version": "1.0.10",
+      "lastcommitsha": "6d2237e",
+      "description": "pre-interview technical test"
+    }
+  ]
+}
+
 ```
