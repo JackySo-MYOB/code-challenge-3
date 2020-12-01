@@ -1,6 +1,6 @@
 {
   "name": "code_challenge_node_app",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Node.js on Docker",
   "author": "Jacky So <jacky.so@24x7classroom.com>",
   "main": "server.js",
