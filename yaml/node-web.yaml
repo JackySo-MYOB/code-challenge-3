@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp1
+  namespace: default
+  labels:
+    app: webapp1
+  annotations:
+  # Container Image Automated Updates
+  # flux.weave.works/automated: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp1
+  template:
+    metadata:
+      labels:
+        app: webapp1
+    spec:
+      containers:
+      - name: webapp1
+        image: docker.io/jackyso/node-web:1.0.3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          hostPort: 8080
+          name: http
+          protocol: TCP
+  strategy:
+    type: Recreate
+
