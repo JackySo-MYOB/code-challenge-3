@@ -33,7 +33,7 @@ update-version: ## Update node pakage.json version in package.json and tag versi
 	@make -s update-tag
 
 update-tag: ## Update tag version in yaml file
-	@cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(TAG)/g' yaml/node-web.yaml
+	@cp yaml/template.yaml workloads/node-web.yaml && sed -i '/image/s/latest/$(TAG)/g' workloads/node-web.yaml
 
 run-node: ## Run nodejs application $(APPS)
 	@node $(APPS) &
@@ -162,3 +162,5 @@ kubectl-get-pod-flux: ## SSH into Kubernetes master node and get pod name in flu
 kubectl-log-pod-flux: ## SSH into Kubernetes master node and view logs of pod in flux namespace
 	@echo "--- SSH into master node and view pod flux logs"
 	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l app=flux -n flux -f
+
+deploy-flux-gitops: kubectl-sa-tiller helm-init helm-install-flux kubectl-get-pod-flux ## Install and deploy FluxCD into k8s cluster
