@@ -28,7 +28,7 @@ install-dep: ## Intall nodejs dependencies in package.json
 
 update-version: ## Update node pakage.json version in package.json
 	@npm version $(TYPE) || true
-	@cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(TAG)/g' yaml/node-web.yaml
+	@cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", ]//g')/g' yaml/node-web.yaml
 
 run-node: ## Run nodejs application $(APPS)
 	@node $(APPS) &

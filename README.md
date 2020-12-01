@@ -1099,4 +1099,73 @@ $ make kubectl-command COMMAND="get pods -n default"
 --- SSH into master node and kubectl get pods -n default
 No resources found in default namespace.
 
+$ make update-version
+v1.0.5
+jso@ubunu2004:~/myob-work/work/aws-cf/git-repo/code-challenge-3$ make docker-image-rm
+Error: No such image: jackyso/node-web:1.0.5
+jso@ubunu2004:~/myob-work/work/aws-cf/git-repo/code-challenge-3$ make docker-build
+Sending build context to Docker daemon  181.5MB
+Step 1/9 : FROM node:10
+ ---> 2db91b8e7c1b
+Step 2/9 : WORKDIR /usr/src
+ ---> Running in fd0f7f6ad08e
+Removing intermediate container fd0f7f6ad08e
+ ---> 6b8fa6007f01
+Step 3/9 : RUN git clone https://github.com/JackySo-MYOB/code-challenge-3.git app
+ ---> Running in 1a81c990c42d
+Cloning into 'app'...
+Removing intermediate container 1a81c990c42d
+ ---> acc1f115e9b8
+Step 4/9 : WORKDIR /usr/src/app
+ ---> Running in c2b98b296230
+Removing intermediate container c2b98b296230
+ ---> e984a66f4d18
+Step 5/9 : COPY package*.json ./
+ ---> d91f65f33563
+Step 6/9 : RUN npm install
+ ---> Running in bd9dc5bbe4e3
+npm WARN code_challenge_node_app@1.0.5 No repository field.
+npm WARN code_challenge_node_app@1.0.5 No license field.
+
+added 50 packages from 37 contributors and audited 50 packages in 1.674s
+found 0 vulnerabilities
+
+Removing intermediate container bd9dc5bbe4e3
+ ---> 27c8e6f7c926
+Step 7/9 : COPY . .
+ ---> 7ca60b1ae626
+Step 8/9 : EXPOSE 8080
+ ---> Running in c50a1a6afe4d
+Removing intermediate container c50a1a6afe4d
+ ---> 012353e2ff2c
+Step 9/9 : CMD [ "node", "server.js" ]
+ ---> Running in 73c069cf9026
+Removing intermediate container 73c069cf9026
+ ---> 07d5f311b377
+Successfully built 07d5f311b377
+Successfully tagged jackyso/node-web:1.0.5
+jso@ubunu2004:~/myob-work/work/aws-cf/git-repo/code-challenge-3$ make docker-push
+Password: 
+WARNING! Your password will be stored unencrypted in /home1/jso/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+The push refers to repository [docker.io/jackyso/node-web]
+418184180f9f: Pushed 
+1209e69e75e2: Pushed 
+e090bebe632a: Pushed 
+92d79814b0dd: Pushed 
+982ea30af730: Layer already exists 
+a047f6fe27f5: Layer already exists 
+f5211c608ae5: Layer already exists 
+0c6d2a8d3a7e: Layer already exists 
+6ad22fbe53ce: Layer already exists 
+f04853d2d299: Layer already exists 
+9f07fffa6fe1: Layer already exists 
+6c5a5125b341: Layer already exists 
+26711ab4f3b6: Layer already exists 
+1.0.5: digest: sha256:78f51c6502736d75b1f826dfbe42f20fab3166ea5f5391828d7cdc6acc8f1ce2 size: 3056
+
+
 ```
