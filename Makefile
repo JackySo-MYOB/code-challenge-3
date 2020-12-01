@@ -122,7 +122,9 @@ kubectl-command: ## SSH into Kubernetes master node and kubectl $(COMMAND)
 
 apply-node-web: ## Copy node-web file to master and apply into cluster
 	@echo "--- SCP file into master node and kubectl apply"
-	@sudo scp -i aws-kubeadm-terraform/tf-kube yaml/node-web.yaml ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master): 
+	@sudo scp -i aws-kubeadm-terraform/tf-kube namespaces/app-namespace.yaml ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master): 
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl apply -f app-namespace.yaml
+	@sudo scp -i aws-kubeadm-terraform/tf-kube workloads/node-web.yaml ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master): 
 	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl apply -f node-web.yaml
 
 validate-k8s-app: ## Validate K8s cluster run app by curl http://worker:8080/version
@@ -163,4 +165,4 @@ kubectl-log-pod-flux: ## SSH into Kubernetes master node and view logs of pod in
 	@echo "--- SSH into master node and view pod flux logs"
 	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l app=flux -n flux -f
 
-deploy-flux-gitops: kubectl-sa-tiller helm-init helm-install-flux kubectl-get-pod-flux ## Install and deploy FluxCD into k8s cluster
+deploy-flux-gitops: kubectl-sa-tiller helm-init kubectl-install-flux-crd helm-install-flux kubectl-get-pod-flux ## Install and deploy FluxCD into k8s cluster
