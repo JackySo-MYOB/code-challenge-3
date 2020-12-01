@@ -12,7 +12,7 @@ IMAGE := node-web
 TAG := $(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", ]//g')
 CONTAINER := node-web
 FLUX := https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deploy-helm/flux-helm-release-crd.yaml
-GIT := github.com:JackySo-MYOB/code-challenge-3.git
+GIT := https://github.com/JackySo-MYOB/code-challenge-3.git
 
 ## help: This help
 help: Makefile
