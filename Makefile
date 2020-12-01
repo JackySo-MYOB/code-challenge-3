@@ -157,5 +157,8 @@ helm-install-flux: ## SSH into Kubernetes master node and helm add repo plus ins
 
 kubectl-get-pod-flux: ## SSH into Kubernetes master node and get pod name in flux namespace
 	@echo "--- SSH into master node and get pod name"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get pods -n flux | grep -v memcached
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get pods -n flux -l app=flux
 
+kubectl-log-pod-flux: ## SSH into Kubernetes master node and view logs of pod in flux namespace
+	@echo "--- SSH into master node and view pod flux logs"
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l app=flux -n flux -f
