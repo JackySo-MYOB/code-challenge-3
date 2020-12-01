@@ -26,9 +26,12 @@ test: ## Testing
 install-dep: ## Intall nodejs dependencies in package.json
 	@npm install || true
 
-update-version: ## Update node pakage.json version in package.json
+update-version: ## Update node pakage.json version in package.json and tag version in yaml file
 	@npm version $(TYPE) || true
-	@sleep 5; cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", ]//g')/g' yaml/node-web.yaml
+	@sleep 30; cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", ]//g')/g' yaml/node-web.yaml
+
+update-tag: ## Update tag version in yaml file
+	@cp yaml/template.yaml yaml/node-web.yaml && sed -i '/image/s/latest/$(TAG)/g' yaml/node-web.yaml
 
 run-node: ## Run nodejs application $(APPS)
 	@node $(APPS) &
