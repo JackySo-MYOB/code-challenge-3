@@ -26,12 +26,12 @@ jobs:
       - name: Docker build image
         run: |
           version=$(grep version package.json | awk -F':' '{ print $2 }' | sed 's/[", ]//g')
-          echo "::set-output VERSION=version::$version"
+          echo "::set-output name=VERSION::$version"
           docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
 
       - name: Push image to docker.io
         run: |
           version=$(grep version package.json | awk -F':' '{ print $2 }' | sed 's/[", ]//g')
-          echo "::set-output VERSION=version::$version"
+          echo "::set-output name=VERSION::$version"
           docker push $DOCKER_REGISTRY/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
 
