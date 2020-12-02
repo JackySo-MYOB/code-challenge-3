@@ -7,7 +7,6 @@ on:
 env:
   IMAGE_NAME: node-web
   DOCKER_REGISTRY: docker.io
-  VERSION: latest
 
 jobs:
   build_push_docker:
@@ -25,8 +24,14 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Docker build image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
+        run: |
+          version=$(grep version package.json | awk -F':' '{ print $2 }' | sed 's/[", ]//g')
+          echo "::set-output VERSION=version::$version"
+          docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
 
       - name: Push image to docker.io
-        run: docker push $DOCKER_REGISTRY/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
+        run: |
+          version=$(grep version package.json | awk -F':' '{ print $2 }' | sed 's/[", ]//g')
+          echo "::set-output VERSION=version::$version"
+          docker push $DOCKER_REGISTRY/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
 
