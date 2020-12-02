@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp1
-  namespace: default
+  namespace: code-challenge
   labels:
     app: webapp1
   annotations:
