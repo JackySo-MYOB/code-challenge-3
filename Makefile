@@ -13,7 +13,7 @@ TAG := $(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", 
 CONTAINER := node-web
 FLUX := https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deploy-helm/flux-helm-release-crd.yaml
 #GIT := https://github.com/JackySo-MYOB/code-challenge-3.git
-GIT := git@github.com/JackySo-MYOB/code-challenge-3.git
+GIT := git@github.com:JackySo-MYOB/code-challenge-3.git
 
 ## help: This help
 help: Makefile
@@ -164,7 +164,7 @@ kubectl-get-pod-flux: ## SSH into Kubernetes master node and get pod name in flu
 
 kubectl-log-pod-flux: ## SSH into Kubernetes master node and view logs of pod in flux namespace
 	@echo "--- SSH into master node and view pod flux logs"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l name=flux -n flux -f
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l app=flux -n flux -f
 
 deploy-flux-gitops: kubectl-sa-tiller helm-init kubectl-install-flux-crd helm-install-flux kubectl-get-pod-flux ## Install and deploy FluxCD into k8s cluster and get pods
 
