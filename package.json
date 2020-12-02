@@ -2,11 +2,17 @@
   "name": "code_challenge_node_app",
   "version": "1.0.15",
   "description": "Node.js on Docker",
-  "author": "Jacky So <jacky.so@24x7classroom.com>",
+  "author": "Jacky So",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackySo-MYOB/code-challenge-3.git"
+  },
+  "license": "ISC",
   "dependencies": {
     "express": "^4.16.1"
   }

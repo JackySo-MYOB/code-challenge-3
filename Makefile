@@ -12,7 +12,8 @@ IMAGE := node-web
 TAG := $(shell grep version package.json | awk -F: '{ print $$2 }' | sed 's/[", ]//g')
 CONTAINER := node-web
 FLUX := https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deploy-helm/flux-helm-release-crd.yaml
-GIT := https://github.com/JackySo-MYOB/code-challenge-3.git
+#GIT := https://github.com/JackySo-MYOB/code-challenge-3.git
+GIT := git@github.com/JackySo-MYOB/code-challenge-3.git
 
 ## help: This help
 help: Makefile
@@ -114,7 +115,7 @@ ssh-worker: ## SSH into Kubernetes worker node
 
 kubectl-nodes: ## SSH into Kubernetes master node and kubectl get nodes -o wide
 	@echo "--- SSH into master node and kubectl get nodes -o wide"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get nodes -o wide
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get nodes -o wide || true
 
 kubectl-command: ## SSH into Kubernetes master node and kubectl $(COMMAND)
 	@echo "--- SSH into master node and kubectl $(COMMAND)"
@@ -154,7 +155,7 @@ kubectl-install-flux-crd: ## SSH into Kubernetes master node and install flux CR
 
 helm-install-flux: ## SSH into Kubernetes master node and helm add repo plus install flux and kubectl get resources in namespace flux
 	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) helm repo add fluxcd https://charts.fluxcd.io
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) helm upgrade -i flux --set helmOperator.create=true --set helmOperator.createCRD=false --set git.url=$(GIT) --set git-branch=main --namespace flux fluxcd/flux
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) helm upgrade -i flux --set helmOperator.create=true --set helmOperator.createCRD=false --set git.url=$(GIT) --namespace flux fluxcd/flux
 	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl get all -n flux
 
 kubectl-get-pod-flux: ## SSH into Kubernetes master node and get pod name in flux namespace
@@ -163,7 +164,7 @@ kubectl-get-pod-flux: ## SSH into Kubernetes master node and get pod name in flu
 
 kubectl-log-pod-flux: ## SSH into Kubernetes master node and view logs of pod in flux namespace
 	@echo "--- SSH into master node and view pod flux logs"
-	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l app=flux -n flux -f
+	@sudo ssh -i aws-kubeadm-terraform/tf-kube ubuntu@$(shell docker-compose run --rm kubeadm-terraform terraform output kubernetes_master) kubectl logs -l name=flux -n flux -f
 
 deploy-flux-gitops: kubectl-sa-tiller helm-init kubectl-install-flux-crd helm-install-flux kubectl-get-pod-flux ## Install and deploy FluxCD into k8s cluster and get pods
 
