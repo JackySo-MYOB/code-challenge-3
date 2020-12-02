@@ -10,6 +10,9 @@ su -c "echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> \
 # Install Helm v2 binary
 curl -s https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 
+# Install fluxctl binary
+wget -O /usr/local/bin/fluxctl https://github.com/fluxcd/flux/releases/download/1.17.0/fluxctl_linux_amd64 && chmod a+x /usr/local/bin/fluxctl
+
 # Install and start SSM agent 
 curl "https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb" -o "amazon-ssm-agent.deb"
 apt-get install -y ./amazon-ssm-agent.deb && systemctl start amazon-ssm-agent.service
