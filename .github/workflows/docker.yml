@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
 
+env:
+  IMAGE_NAME: node-web
+
 jobs:
   build_push_docker:
     runs-on: ubuntu-latest
@@ -15,14 +18,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Build
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Dockerfile
-          push: false
-      - name: Push
-        run: docker push docker.io/jackyso/node-web:latest
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Docker build image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:latest
+
+      - name: Push image to docker.io
+        run: docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:latest
+
+
