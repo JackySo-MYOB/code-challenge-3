@@ -26,10 +26,10 @@ jobs:
       - name: Docker build image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
         env:
-          VERSION: $(cat package.json | grep version | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+          VERSION: $(cat package.json | grep version | awk -F: '{ print $$2 }' | sed 's/[", ]//g')
 
       - name: Push image to docker.io
         run: docker push $DOCKER_REGISTRY/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
         env:
-          VERSION: $(cat package.json | grep version | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+          VERSION: $(cat package.json | grep version | awk -F: '{ print $$2 }' | sed 's/[", ]//g')
 
