@@ -148,8 +148,10 @@ get-flux-workloads                       List FluxCD workloads
 ```
 
 ### Documentation for four sub-tasks as requirement plus GitOps using FluxCD
-*[Sub-tasks-1 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-1.md)
-*[Sub-tasks-2 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-2.md)
-*[Sub-tasks-3 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-3.md)
-*[Sub-tasks-4 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-4.md)
-*[Bonus tasks Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/bonus.md)
+```
+[Sub-tasks-1 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-1.md)
+[Sub-tasks-2 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-2.md)
+[Sub-tasks-3 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-3.md)
+[Sub-tasks-4 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-4.md)
+[Bonus tasks Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/bonus.md)
+```
