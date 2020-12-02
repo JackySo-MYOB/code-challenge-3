@@ -23,15 +23,15 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Docker build image
+      - name: Set version from package.json
         run: |
           version=$(grep version package.json | awk -F':' '{ print $2 }' | sed 's/[", ]//g')
-          echo "::set-output name=VERSION::$version"
-          docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
+          echo '::set-output name=VERSION::$version'
+        id: package-json-version
+
+      - name: Docker build image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:${{ steps.package-json-version.outputs.VERSION }}
 
       - name: Push image to docker.io
-        run: |
-          version=$(grep version package.json | awk -F':' '{ print $2 }' | sed 's/[", ]//g')
-          echo "::set-output name=VERSION::$version"
-          docker push $DOCKER_REGISTRY/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:$VERSION
+        run: docker push $DOCKER_REGISTRY/${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_NAME:${{ steps.package-json-version.outputs.VERSION }}
 
