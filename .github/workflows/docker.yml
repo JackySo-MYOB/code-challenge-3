@@ -15,13 +15,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Build and push
+      - name: Build
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: ./
           file: ./Dockerfile
-          push: true
-          tags: jackyso/node-web:latest
+          push: false
+      - name: Push
+        run: docker push docker.io/jackyso/node-web:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
