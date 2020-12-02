@@ -4,3 +4,4 @@ package-lock.json
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+aws-kubeadm-terraform/terraform.tfstate
