@@ -1,7 +1,7 @@
-# Sub-task-1
+## Sub-task-1
 Code challenge sub-task-1 documentation
 
-## Task requirements
+### Task requirements
 
 1. Create a simple application which has a single “/version” endpoint.
 

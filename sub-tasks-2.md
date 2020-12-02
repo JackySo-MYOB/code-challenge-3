@@ -1,7 +1,7 @@
-# Sub-task-2
+## Sub-task-2
 Code challenge sub-task-2 documentation
 
-## Task requirements
+### Task requirements
 
 2. Containerise your application as a single deployable artefact, encapsulating all dependencies.
 
@@ -11,11 +11,11 @@ Code challenge sub-task-2 documentation
 ├── Dockerfile
 
 +docker-build                             Build the docker image
-+docker-shell                             Run bash shell in docker
-+docker-registry-shell                    Run bash shell in docker pull from registry
+docker-shell                             Run bash shell in docker
+docker-registry-shell                    Run bash shell in docker pull from registry
 +docker-run                               Run the docker
 +docker-registry-run                      Run docker pull from registry
-+docker-login                             Logon docker registry docker.io
+docker-login                             Logon docker registry docker.io
 +docker-push                              Build docker image and push to registry docker.io
 ```
 
@@ -308,4 +308,3 @@ $ make docker-stop
 f3876c164d43
 
 ```
-

@@ -40,7 +40,7 @@ Key assumption for tooling installation in your work-box are
 4. jq for readable output
 Remarks: All other softwares and utilities required in task demonstration and automation will be included into IaC structures
 
-On the ohter hand, you need AWS ID and credential for AWS infrastructure building to validate application deployment into k8s cluster
+On the other hand, you need AWS ID and credential for AWS infrastructure building to validate application deployment into k8s cluster
 
 ### IaC structures and summaried purpose of some key files 
 
@@ -148,8 +148,8 @@ get-flux-workloads                       List FluxCD workloads
 ```
 
 ### Documentation for four sub-tasks as requirement plus GitOps using FluxCD
-[Sub-tasks-1 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-1.md)
-[Sub-tasks-2 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-2.md)
-[Sub-tasks-3 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-3.md)
-[Sub-tasks-4 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-4.md)
-[Bonus tasks Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/bonus.md)
+*[Sub-tasks-1 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-1.md)
+*[Sub-tasks-2 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-2.md)
+*[Sub-tasks-3 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-3.md)
+*[Sub-tasks-4 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-4.md)
+*[Bonus tasks Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/bonus.md)

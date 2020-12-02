@@ -1,7 +1,7 @@
-# Sub-task-3
+## Sub-task-3
 Code challenge sub-task-3 documentation
 
-## Task requirements
+### Task requirements
 
 3. Create a CI pipeline for your application
 
@@ -67,6 +67,6 @@ jobs:
 ### Github workflow screenshot
 
 <p align="center">
-<img src="https://github.com/JackySo-MYOB/code-challenge-3/blob/main/images/github-action.PNG" width="600" height="600">
+<img src="https://github.com/JackySo-MYOB/code-challenge-3/blob/main/images/github-action.PNG">
 </p>
 
