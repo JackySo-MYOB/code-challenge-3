@@ -9,8 +9,14 @@ Code challenge sub-task-3 documentation
 
 The username and token for logging into docker.io registry are securely stored in github store and use as variables when running github workflow steps
 
-### github workflow file 
-```yaml
+
+### github workflow file and content
+```
+
+.github
+└── workflows
+    └── docker.yml
+
 
 name: Node.js CI to Docker hub 
 

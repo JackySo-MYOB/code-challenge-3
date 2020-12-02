@@ -46,6 +46,9 @@ On the other hand, you need AWS ID and credential for AWS infrastructure buildin
 
 ```
 .
+.github
+└── workflows
+    └── docker.yml
 ├── aws-kubeadm-terraform
 │   ├── variables.tf
 │   ├── 0-aws.tf
