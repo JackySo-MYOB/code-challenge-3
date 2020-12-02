@@ -5,6 +5,15 @@ Code challenge sub-task-1 documentation
 
 1. Create a simple application which has a single “/version” endpoint.
 
+### Solution
+
+Use javascript to come up a simple web application to output json data
+* Applications Version
+* Last Commit SHA
+* Description 
+
+Use version in package.json to do versioning in application and docker image TAG
+
 ### Operations and files used in this section
 
 ```diff
