@@ -165,6 +165,7 @@ $ make validate-k8s-app
 
 ### Capture log into running flux pod to validate interaction between running Flux and github repository
 
+```bash
 $ make kubectl-log-pod-flux
 --- SSH into master node and view pod flux logs
 ts=2020-12-02T11:38:18.696645956Z caller=warming.go:206 component=warmer updated=docker.io/calico/node successful=0 attempted=1

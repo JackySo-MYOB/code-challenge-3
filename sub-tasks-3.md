@@ -5,6 +5,10 @@ Code challenge sub-task-3 documentation
 
 3. Create a CI pipeline for your application
 
+### Secret management
+
+The username and token for logging into docker.io registry are securely stored in github store and use as variables when running github workflow steps
+
 ### github workflow file 
 ```yaml
 
