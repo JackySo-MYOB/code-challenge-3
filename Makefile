@@ -29,7 +29,7 @@ install-dep: ## Intall nodejs dependencies in package.json
 	@npm install || true
 
 update-version: ## Update node pakage.json version in package.json and tag version in yaml file
-	@npm version $(TYPE) || true
+	@npm version $(TYPE) --no-git-tag-version || true
 	@make -s update-tag
 
 update-tag: ## Update tag version in yaml file
