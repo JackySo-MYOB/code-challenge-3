@@ -160,3 +160,5 @@ get-flux-workloads                       List FluxCD workloads
 [Sub-tasks-4 Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/sub-tasks-4.md)
 
 [Bonus tasks Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/bonus.md)
+
+[Eslint validation Documentation](https://github.com/JackySo-MYOB/code-challenge-3/blob/main/eslint.md)
